@@ -41,17 +41,6 @@
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
                         'swing': 'swing 3s ease-in-out infinite alternate',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-8px)' },
-                        },
-                        swing: {
-                            '0%': { transform: 'rotate(-3deg)' },
-                            '100%': { transform: 'rotate(3deg)' },
-                        }
                     }
                 }
             }
@@ -63,31 +52,19 @@
             font-family: 'Alexandria', sans-serif; 
             background-color: #241245;
             -webkit-tap-highlight-color: transparent;
-            /* Prevents pull-to-refresh on mobile which can look glitchy with fixed backgrounds */
             overscroll-behavior-y: none; 
         }
         
-        /* Smooth Scrollbar */
         ::-webkit-scrollbar { width: 3px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #d8b4fe; border-radius: 10px; }
 
-        /* Glass Effect Optimized for Mobile */
         .glass-card {
             background: rgba(59, 31, 99, 0.6);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        /* Active States */
-        .btn-active {
-            background: linear-gradient(135deg, #e879f9, #d946ef);
-            color: white;
-            font-weight: 700;
-            border: none;
-            box-shadow: 0 2px 10px rgba(232, 121, 249, 0.4);
         }
 
         .habit-active {
@@ -98,49 +75,44 @@
         .habit-active .check-circle { background: #e879f9; border-color: #e879f9; color: white; }
         .habit-active .habit-text { color: #f5d0fe; font-weight: 700; }
 
-        /* Lantern String */
+        .plan-done {
+            background: rgba(74, 222, 128, 0.15);
+            border-color: #4ade80;
+        }
+        .plan-done .plan-icon { color: #4ade80; }
+        .plan-done .plan-text { text-decoration: line-through; color: #86efac; }
+
         .string {
             width: 1px;
             background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.5));
             margin: 0 auto;
         }
         
-        /* Prevent zoom on input focus for iOS */
         input { font-size: 16px !important; }
     </style>
 </head>
-<body class="text-white min-h-screen pb-36 overflow-x-hidden selection:bg-theme-accent selection:text-theme-bg">
+<body class="text-white min-h-screen pb-40 overflow-x-hidden selection:bg-theme-accent selection:text-theme-bg">
 
-    <!-- Background Decoration -->
+    <!-- Background -->
     <div class="fixed inset-0 pointer-events-none z-0">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#4c1d95] via-[#241245] to-[#180a33] opacity-90"></div>
-        <!-- Pattern -->
         <div class="absolute inset-0 opacity-[0.04]" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 30 L60 0 L60 60 Z M0 0 L30 30 L0 60 Z\' fill=\'%23ffffff\' fill-opacity=\'1\'/%3E%3C/svg%3E');"></div>
     </div>
 
-    <!-- Festive Decorations (Mobile Optimized) -->
-    <!-- Reduced heights and sizes for mobile to prevent blocking content -->
+    <!-- Decorations -->
     <div class="fixed top-0 w-full h-32 z-10 pointer-events-none flex justify-between px-4 overflow-visible">
-        
-        <!-- Left: Big Lantern -->
         <div class="relative w-10 h-32 animate-swing origin-top" style="animation-duration: 4s;">
             <div class="string h-16"></div>
             <i class="fas fa-lightbulb text-theme-gold text-3xl absolute bottom-8 left-1/2 -translate-x-1/2 drop-shadow-[0_0_15px_rgba(252,211,77,0.6)]"></i>
         </div>
-
-        <!-- Left-Center: Star (Hidden on very small screens) -->
         <div class="relative w-8 h-24 animate-swing origin-top hidden xs:block" style="animation-duration: 3.5s; animation-delay: 1s;">
             <div class="string h-12"></div>
             <i class="fas fa-star text-theme-primary text-lg absolute bottom-7 left-1/2 -translate-x-1/2 drop-shadow-glow"></i>
         </div>
-
-        <!-- Right-Center: Crescent -->
         <div class="relative w-8 h-28 animate-swing origin-top hidden xs:block" style="animation-duration: 3.2s; animation-delay: 0.2s;">
             <div class="string h-14"></div>
             <i class="fas fa-moon text-theme-accent text-xl absolute bottom-7 left-1/2 -translate-x-1/2 drop-shadow-glow"></i>
         </div>
-
-        <!-- Right: Big Lantern -->
         <div class="relative w-10 h-28 animate-swing origin-top" style="animation-duration: 4.2s; animation-delay: 0.8s;">
             <div class="string h-14"></div>
             <i class="fas fa-lightbulb text-theme-gold text-3xl absolute bottom-8 left-1/2 -translate-x-1/2 drop-shadow-[0_0_15px_rgba(252,211,77,0.6)]"></i>
@@ -157,14 +129,12 @@
             رَفِيقُ <span class="text-theme-accent">رَمَضَان</span>
         </h1>
         
-        <!-- Greeting -->
         <div class="inline-block bg-white/5 backdrop-blur-md rounded-full px-4 py-1.5 mb-5 border border-white/10 shadow-glow">
             <span class="text-sm xs:text-base text-purple-100 font-kufi tracking-wide">
                 رَمَضَانُ كَرِيمٌ يَا <span class="text-theme-accent font-bold">نُورْهَان</span> <i class="fas fa-heart text-theme-accent text-xs mr-1"></i>
             </span>
         </div>
 
-        <!-- Date Nav -->
         <div class="flex items-center justify-between w-full max-w-[300px] mx-auto bg-theme-surface/70 backdrop-blur-md rounded-xl p-1.5 border border-white/10 shadow-lg">
             <button onclick="changeDate(-1)" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 text-theme-accent hover:bg-theme-accent hover:text-white transition-all active:scale-95">
                 <i class="fas fa-chevron-right"></i>
@@ -177,41 +147,57 @@
     </header>
 
     <!-- Main Content -->
-    <!-- Removed max-w constraints that were too small, adjusted padding -->
     <main class="relative z-20 container mx-auto px-3 w-full pb-6">
         <div class="flex flex-col gap-4">
             
+            <!-- SECTION 0: TODAY'S PLAN (New) -->
+            <div class="glass-card rounded-2xl p-4 border-t-4 border-theme-gold">
+                <div class="flex justify-between items-center mb-3 border-b border-white/5 pb-2">
+                    <h2 class="text-lg font-bold text-theme-gold font-kufi flex items-center gap-2">
+                        <i class="fas fa-clipboard-list"></i> خُطَّةُ اليَوْم <span id="ramadanDayBadge" class="text-xs bg-white/10 px-2 py-0.5 rounded-full text-white"></span>
+                    </h2>
+                </div>
+                
+                <div class="space-y-3">
+                    <!-- Review Plan -->
+                    <div id="reviewPlanCard" onclick="togglePlan('review')" 
+                         class="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/5 cursor-pointer active:scale-[0.98] transition-all">
+                        <div class="flex flex-col">
+                            <span class="text-xs text-purple-300 font-bold mb-1">وِرْدُ المُـرَاجَعَة</span>
+                            <span id="reviewText" class="plan-text text-sm font-medium text-white">...</span>
+                        </div>
+                        <i class="plan-icon fas fa-check-circle text-2xl text-white/10 transition-colors"></i>
+                    </div>
+
+                    <!-- Reading Plan -->
+                    <div id="readingPlanCard" onclick="togglePlan('reading')" 
+                         class="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-white/5 cursor-pointer active:scale-[0.98] transition-all">
+                        <div class="flex flex-col">
+                            <span class="text-xs text-purple-300 font-bold mb-1">وِرْدُ القِـرَاءَة</span>
+                            <span id="readingText" class="plan-text text-sm font-medium text-white">...</span>
+                        </div>
+                        <i class="plan-icon fas fa-check-circle text-2xl text-white/10 transition-colors"></i>
+                    </div>
+                </div>
+            </div>
+
             <!-- SECTION 1: Prayers -->
             <div class="glass-card rounded-2xl p-4">
                 <h2 class="flex items-center gap-2 text-lg font-bold text-theme-primary mb-3 font-kufi border-b border-white/5 pb-2">
                     <i class="fas fa-mosque"></i> الصَّلَوَاتُ الخَمْس
                 </h2>
-                <div id="prayersList" class="space-y-2.5">
-                    <!-- JS Injected -->
-                </div>
+                <div id="prayersList" class="space-y-2.5"></div>
             </div>
 
             <!-- SECTION 2: Habits -->
             <div class="glass-card rounded-2xl p-4">
                 <h2 class="flex items-center gap-2 text-lg font-bold text-theme-accent mb-3 font-kufi border-b border-white/5 pb-2">
-                    <i class="fas fa-star"></i> وِرْدٌ وَعِبَادَة
+                    <i class="fas fa-star"></i> عِبَادَاتٌ إِضَافِيَّة
                 </h2>
 
-                <!-- Quran Input -->
-                <div class="bg-black/20 rounded-xl p-3 mb-3 border border-white/5">
-                    <label class="block text-xs text-purple-200 mb-1 opacity-80 font-kufi">وِرْدُ القُرْآنِ اليَوْم (صَفْحَة)</label>
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-book-open text-theme-accent text-lg"></i>
-                        <input type="number" id="quranPages" placeholder="0" 
-                            class="w-full bg-transparent text-xl font-bold text-white placeholder-white/20 focus:outline-none text-center h-8 border-b border-white/10 focus:border-theme-accent transition-colors">
-                    </div>
-                </div>
-
-                <!-- Toggles -->
                 <div class="space-y-2.5">
-                    <!-- Taraweeh -->
                     <div id="taraweehCard" onclick="toggleHabit('taraweeh')" 
-                         class="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/5 cursor-pointer transition-all active:scale-[0.97] tap-highlight-transparent">
+                         class="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/5 cursor-pointer transition-all active:scale-[0.97]">
                         <div class="flex items-center gap-3">
                             <div class="icon-box w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-purple-200 transition-colors">
                                 <i class="fas fa-moon text-sm"></i>
@@ -223,9 +209,8 @@
                         </div>
                     </div>
 
-                    <!-- Tahajjud -->
                     <div id="tahajjudCard" onclick="toggleHabit('tahajjud')" 
-                         class="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/5 cursor-pointer transition-all active:scale-[0.97] tap-highlight-transparent">
+                         class="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/5 cursor-pointer transition-all active:scale-[0.97]">
                         <div class="flex items-center gap-3">
                             <div class="icon-box w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-purple-200 transition-colors">
                                 <i class="fas fa-cloud-moon text-sm"></i>
@@ -237,9 +222,8 @@
                         </div>
                     </div>
 
-                    <!-- Azkar -->
                     <div id="azkarCard" onclick="toggleHabit('azkar')" 
-                         class="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/5 cursor-pointer transition-all active:scale-[0.97] tap-highlight-transparent">
+                         class="flex items-center justify-between p-3 rounded-xl border border-white/5 bg-white/5 cursor-pointer transition-all active:scale-[0.97]">
                         <div class="flex items-center gap-3">
                             <div class="icon-box w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-purple-200 transition-colors">
                                 <i class="fas fa-hands-praying text-sm"></i>
@@ -255,26 +239,11 @@
 
             <!-- SECTION 3: Progress & Stats -->
             <div class="glass-card rounded-2xl p-5">
-                <h2 class="text-lg font-bold text-white mb-4 font-kufi text-center">إِنْجَازُكِ فِي الخَتْمَة</h2>
-                
-                <!-- Circular Progress -->
-                <div class="relative w-40 h-40 mx-auto mb-4">
-                    <svg class="w-full h-full -rotate-90 filter drop-shadow-lg">
-                        <circle cx="80" cy="80" r="70" stroke="rgba(255,255,255,0.05)" stroke-width="10" fill="none"/>
-                        <circle id="khatmaCircle" cx="80" cy="80" r="70" stroke="#f0abfc" stroke-width="10" fill="none"
-                            stroke-dasharray="440" stroke-dashoffset="440" stroke-linecap="round" class="transition-all duration-1000"/>
-                    </svg>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center">
-                        <span id="khatmaPct" class="text-3xl font-bold text-white font-kufi">0%</span>
-                        <span id="khatmaLabel" class="text-[10px] text-purple-200 bg-white/10 px-2 py-0.5 rounded-full mt-1 font-kufi">الختمة الأولى</span>
-                    </div>
-                </div>
-
-                <!-- Quick Stats -->
+                <h2 class="text-lg font-bold text-white mb-4 font-kufi text-center">إِنْجَازُكِ الشَّهْرِي</h2>
                 <div class="grid grid-cols-3 gap-2 text-center">
                     <div class="bg-white/5 rounded-xl p-2 border border-white/5">
-                        <div id="totalPagesDisplay" class="text-lg font-bold text-white font-kufi">0</div>
-                        <div class="text-[9px] text-purple-300 font-bold">صَفْحَة</div>
+                        <div id="planDoneCount" class="text-lg font-bold text-white font-kufi">0</div>
+                        <div class="text-[9px] text-purple-300 font-bold">خُطَّة مُكْتَمِلَة</div>
                     </div>
                     <div class="bg-white/5 rounded-xl p-2 border border-white/5">
                         <div id="taraweehCount" class="text-lg font-bold text-theme-primary font-kufi">0</div>
@@ -287,49 +256,70 @@
                 </div>
             </div>
 
-            <!-- SECTION 4: Podcast/Note -->
+            <!-- SECTION 4: Note -->
             <div class="glass-card rounded-2xl p-4">
                 <h2 class="text-sm font-bold text-purple-300 mb-2 font-kufi flex items-center gap-2">
-                    <i class="fas fa-pen-fancy"></i> فَائِدَةُ اليَوْم
+                    <i class="fas fa-pen-fancy"></i> مُلَاحَظَة / فَائِدَة
                 </h2>
                 <div class="flex gap-2 mb-3">
-                    <input type="text" id="podcastInput" placeholder="سجلي هنا عنوان درس..." 
+                    <input type="text" id="podcastInput" placeholder="سجلي هنا..." 
                         class="flex-1 bg-black/20 border border-white/10 rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-theme-accent transition-colors">
-                    <button onclick="addPodcast()" class="bg-theme-accent text-theme-bg w-10 rounded-xl flex items-center justify-center font-bold shadow-lg active:scale-95 transition-transform hover:bg-white hover:text-theme-bg">
+                    <button onclick="addPodcast()" class="bg-theme-accent text-theme-bg w-10 rounded-xl flex items-center justify-center font-bold shadow-lg active:scale-95 transition-transform">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
-                
-                <!-- History Log -->
-                <div id="historyLog" class="space-y-1.5 max-h-32 overflow-y-auto pr-1 custom-scrollbar">
-                    <!-- Items -->
-                </div>
+                <div id="historyLog" class="space-y-1.5 max-h-32 overflow-y-auto pr-1 custom-scrollbar"></div>
             </div>
 
-            <!-- Reset -->
             <div class="text-center pt-2">
-                <button onclick="resetData()" class="text-[10px] text-red-400/50 px-4 py-2 hover:text-red-400 transition-colors">
-                    حذف جميع البيانات
-                </button>
+                <button onclick="resetData()" class="text-[10px] text-red-400/50 px-4 py-2 hover:text-red-400 transition-colors">حذف جميع البيانات</button>
             </div>
-
         </div>
     </main>
 
-    <!-- Floating Action Button (Sticky Bottom with Gradient Fade) -->
+    <!-- Floating Action Button -->
     <div class="fixed bottom-0 left-0 w-full p-4 z-50 bg-gradient-to-t from-[#241245] via-[#241245] to-transparent pointer-events-none pb-6">
         <button onclick="saveData()" id="saveBtn" 
             class="pointer-events-auto w-full max-w-sm mx-auto bg-gradient-to-r from-theme-accent to-purple-500 text-white font-bold text-base py-3.5 rounded-2xl shadow-[0_8px_25px_rgba(232,121,249,0.4)] active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-kufi border border-white/10">
-            <i class="fas fa-check-circle"></i> حِفْظُ إَنْجَازِكِ
+            <i class="fas fa-check-circle"></i> حِفْظُ اليَوْم
         </button>
     </div>
 
     <!-- Scripts -->
     <script>
-        // --- Confetti ---
-        function triggerConfetti() {
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 }, colors: ['#e879f9', '#ffffff', '#fcd34d'] });
-        }
+        // --- 1. RAMADAN SCHEDULE DATA (Extracted from Image) ---
+        const SCHEDULE = [
+            { day: 1, rev: "الربع 1، 2", read: "الجزء 1، 2" },
+            { day: 2, rev: "الربع 1، 2", read: "الجزء 3" },
+            { day: 3, rev: "الربع 3، 4", read: "الجزء 4" },
+            { day: 4, rev: "الربع 3، 4", read: "الجزء 5" },
+            { day: 5, rev: "الحزب 1", read: "الجزء 6" },
+            { day: 6, rev: "الربع 5، 6", read: "الجزء 7" },
+            { day: 7, rev: "الربع 5، 6", read: "الجزء 8" },
+            { day: 8, rev: "الربع 7، 8", read: "الجزء 9" },
+            { day: 9, rev: "الربع 7، 8", read: "الجزء 10" },
+            { day: 10, rev: "استدراك", read: "استدراك" },
+            { day: 11, rev: "الحزب 2", read: "الجزء 11، 12" },
+            { day: 12, rev: "الحزب 1", read: "الجزء 13" },
+            { day: 13, rev: "الحزب 1", read: "الجزء 14" },
+            { day: 14, rev: "الحزب 2", read: "الجزء 15" },
+            { day: 15, rev: "الحزب 2", read: "الجزء 16" },
+            { day: 16, rev: "الحزب 1", read: "الجزء 17" },
+            { day: 17, rev: "الجزء 1", read: "الجزء 18" },
+            { day: 18, rev: "الجزء 1", read: "الجزء 19" },
+            { day: 19, rev: "الربع 1، 2، 3", read: "الجزء 20" },
+            { day: 20, rev: "الربع 4، 5، 6", read: "الجزء 21" },
+            { day: 21, rev: "الربع 7، 8", read: "استدراك" },
+            { day: 22, rev: "الربع 7، 8", read: "الجزء 22" },
+            { day: 23, rev: "الحزب 1", read: "الجزء 23" },
+            { day: 24, rev: "الحزب 2", read: "الجزء 24" },
+            { day: 25, rev: "الجزء 1", read: "الجزء 25" },
+            { day: 26, rev: "الجزء 1", read: "الجزء 26" },
+            { day: 27, rev: "الجزء 1", read: "الجزء 27" },
+            { day: 28, rev: "الجزء 1", read: "الجزء 28" },
+            { day: 29, rev: "الجزء 1", read: "الجزء 29، 30" },
+            { day: 30, rev: "استدراك", read: "استدراك" }
+        ];
 
         // --- Config ---
         const PRAYERS_CONFIG = {
@@ -340,6 +330,10 @@
             maghrib: { label: 'المَغْرِب', fard: true, sunnah: true },
             isha: { label: 'العِشَاء', fard: true, sunnah: true }
         };
+
+        // Assume today is Day 1 of usage -> Mapped to Ramadan 1 for simplicity in this demo
+        // Ideally we pick a start date. Let's start tracking from Feb 18, 2026 (today) as Ramadan 1.
+        const RAMADAN_START_DATE = new Date('2026-02-18'); 
 
         let currentDate = new Date().toISOString().split('T')[0];
         let appData = JSON.parse(localStorage.getItem('ramadanTrackerData')) || {};
@@ -355,48 +349,76 @@
             updateUI(); 
         }
 
+        function getRamadanDayIndex(dateStr) {
+            const curr = new Date(dateStr);
+            const start = new Date(RAMADAN_START_DATE);
+            const diffTime = Math.abs(curr - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+            // If date is before start, show day 1. If after 30, show 30.
+            if(curr < start) return 1;
+            return (diffDays + 1) > 30 ? (diffDays + 1) % 30 || 30 : (diffDays + 1);
+        }
+
         function updateUI() {
             const dt = new Date(currentDate);
             document.getElementById('currentDateDisplay').textContent = dt.toLocaleDateString('ar-EG', { weekday: 'short', day: 'numeric', month: 'numeric' });
             
-            const day = appData[currentDate] || { prayers: {}, quran: 0, taraweeh: false, tahajjud: false, azkar: false, podcasts: [] };
+            const day = appData[currentDate] || { 
+                prayers: {}, 
+                taraweeh: false, tahajjud: false, azkar: false, podcasts: [],
+                plan: { review: false, reading: false } 
+            };
 
+            // 1. Update Schedule Section
+            const rDay = getRamadanDayIndex(currentDate);
+            const scheduleItem = SCHEDULE.find(s => s.day === rDay) || SCHEDULE[0];
+            
+            document.getElementById('ramadanDayBadge').textContent = `رَمَضَان ${rDay}`;
+            document.getElementById('reviewText').textContent = scheduleItem.rev;
+            document.getElementById('readingText').textContent = scheduleItem.read;
+            
+            updatePlanVisual('review', day.plan?.review);
+            updatePlanVisual('reading', day.plan?.reading);
+
+            // 2. Update Prayers
             Object.keys(PRAYERS_CONFIG).forEach(k => {
                 const p = PRAYERS_CONFIG[k];
                 const s = day.prayers?.[k] || {};
-                
                 if(p.fard) setBtnState(`${k}-fard`, s.fard);
                 if(p.sunnah) setBtnState(`${k}-sunnah`, s.sunnah, true);
             });
 
+            // 3. Update Habits
             updateHabitVisual('taraweeh', day.taraweeh);
             updateHabitVisual('tahajjud', day.tahajjud);
             updateHabitVisual('azkar', day.azkar);
 
-            document.getElementById('quranPages').value = day.quran || '';
             updateDashboard();
+        }
+
+        function togglePlan(type) {
+            const card = document.getElementById(`${type}PlanCard`);
+            const isDone = card.classList.toggle('plan-done');
+            // Save happens in saveData
+        }
+
+        function updatePlanVisual(type, isDone) {
+            const card = document.getElementById(`${type}PlanCard`);
+            if(isDone) card.classList.add('plan-done');
+            else card.classList.remove('plan-done');
         }
 
         function initPrayersUI() {
             const container = document.getElementById('prayersList');
             container.innerHTML = '';
-            
             Object.keys(PRAYERS_CONFIG).forEach(key => {
                 const p = PRAYERS_CONFIG[key];
                 let btns = '<div class="flex gap-2">';
-                
                 if(p.fard) btns += `<button id="${key}-fard" onclick="toggleBtn(this)" class="h-8 px-3 rounded-lg border border-white/10 text-[11px] text-purple-200 transition-all font-medium active:scale-95">فَرْض</button>`;
                 else if(key === 'duha') btns += `<span class="text-[10px] text-purple-400 self-center ml-2">سُنَّة</span>`;
-
                 if(p.sunnah) btns += `<button id="${key}-sunnah" onclick="toggleBtn(this, true)" class="h-8 px-3 rounded-lg border border-white/10 text-[11px] text-purple-200 transition-all font-medium active:scale-95">سُنَّة</button>`;
                 btns += '</div>';
-
-                container.innerHTML += `
-                    <div class="flex justify-between items-center py-2.5 border-b border-white/5 last:border-0">
-                        <span class="font-bold text-sm text-white font-kufi ${key==='duha'?'text-theme-accent':''}">${p.label}</span>
-                        ${btns}
-                    </div>
-                `;
+                container.innerHTML += `<div class="flex justify-between items-center py-2.5 border-b border-white/5 last:border-0"><span class="font-bold text-sm text-white font-kufi ${key==='duha'?'text-theme-accent':''}">${p.label}</span>${btns}</div>`;
             });
         }
 
@@ -414,52 +436,45 @@
         }
 
         function applyBtnStyles(btn, active, isSunnah) {
-            // Default styling
-            btn.className = "h-8 px-3 rounded-lg border text-[11px] transition-all font-medium active:scale-95 ";
-            
             if(active) {
-                if(isSunnah) {
-                    btn.className += "border-theme-accent text-theme-accent font-bold bg-theme-accent/10 shadow-[0_0_8px_rgba(240,171,252,0.2)]";
-                } else {
-                    btn.className += "border-none bg-gradient-to-r from-theme-accent to-purple-500 text-white font-bold shadow-[0_0_10px_rgba(232,121,249,0.4)]";
-                }
+                if(isSunnah) btn.className = "h-8 px-3 rounded-lg border border-theme-accent text-theme-accent font-bold bg-theme-accent/10 shadow-[0_0_8px_rgba(240,171,252,0.2)]";
+                else btn.className = "h-8 px-3 rounded-lg border-none bg-gradient-to-r from-theme-accent to-purple-500 text-white font-bold shadow-[0_0_10px_rgba(232,121,249,0.4)]";
             } else {
-                btn.className += "border-white/10 text-purple-200 bg-transparent";
+                btn.className = "h-8 px-3 rounded-lg border border-white/10 text-purple-200 bg-transparent";
             }
         }
 
         function toggleHabit(id) {
-            const card = document.getElementById(id + 'Card');
-            card.classList.toggle('habit-active');
+            document.getElementById(id + 'Card').classList.toggle('habit-active');
         }
 
         function updateHabitVisual(id, completed) {
             const card = document.getElementById(id + 'Card');
-            if(completed) card.classList.add('habit-active');
-            else card.classList.remove('habit-active');
+            if(completed) card.classList.add('habit-active'); else card.classList.remove('habit-active');
         }
 
         function saveData() {
             const prayers = {};
             let fardDone = 0;
-
             Object.keys(PRAYERS_CONFIG).forEach(k => {
                 const p = PRAYERS_CONFIG[k];
                 const fBtn = document.getElementById(`${k}-fard`);
                 const sBtn = document.getElementById(`${k}-sunnah`);
-                
-                prayers[k] = {
-                    fard: fBtn ? fBtn.classList.contains('active') : false,
-                    sunnah: sBtn ? sBtn.classList.contains('active') : false
-                };
+                prayers[k] = { fard: fBtn ? fBtn.classList.contains('active') : false, sunnah: sBtn ? sBtn.classList.contains('active') : false };
                 if(p.fard && prayers[k].fard) fardDone++;
             });
 
             const currentPodcasts = appData[currentDate]?.podcasts || [];
+            
+            // Capture plan state
+            const plan = {
+                review: document.getElementById('reviewPlanCard').classList.contains('plan-done'),
+                reading: document.getElementById('readingPlanCard').classList.contains('plan-done')
+            };
 
             appData[currentDate] = {
                 prayers,
-                quran: parseInt(document.getElementById('quranPages').value) || 0,
+                plan,
                 taraweeh: document.getElementById('taraweehCard').classList.contains('habit-active'),
                 tahajjud: document.getElementById('tahajjudCard').classList.contains('habit-active'),
                 azkar: document.getElementById('azkarCard').classList.contains('habit-active'),
@@ -469,14 +484,15 @@
             localStorage.setItem('ramadanTrackerData', JSON.stringify(appData));
             updateDashboard();
 
-            // Feedback
             const btn = document.getElementById('saveBtn');
             const originalHTML = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-check-double"></i> تَمَّ الحِفْظُ';
             btn.classList.replace('from-theme-accent', 'from-green-500');
             btn.classList.replace('to-purple-500', 'to-green-600');
             
-            if(fardDone === 5) triggerConfetti();
+            if(fardDone === 5) {
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 }, colors: ['#e879f9', '#ffffff', '#fcd34d'] });
+            }
 
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
@@ -489,54 +505,32 @@
             const inp = document.getElementById('podcastInput');
             const val = inp.value.trim();
             if(!val) return;
-            
             if(!appData[currentDate]) appData[currentDate] = {prayers:{}, podcasts:[]};
             if(!appData[currentDate].podcasts) appData[currentDate].podcasts = [];
-            
             appData[currentDate].podcasts.push(val);
             inp.value = '';
             saveData();
         }
 
         function updateDashboard() {
-            let totalQ = 0, totalTaraweeh = 0, totalTahajjud = 0;
-
+            let totalTaraweeh = 0, totalTahajjud = 0, totalPlanDone = 0;
             Object.values(appData).forEach(d => {
-                totalQ += (d.quran || 0);
                 if(d.taraweeh) totalTaraweeh++;
                 if(d.tahajjud) totalTahajjud++;
+                if(d.plan?.review && d.plan?.reading) totalPlanDone++;
             });
 
-            // Circular Progress
-            const KHATMA_LEN = 604;
-            let khatmaNum = Math.floor(totalQ / KHATMA_LEN) + 1;
-            let currentQ = totalQ % KHATMA_LEN;
-            if(totalQ > 0 && currentQ === 0) { khatmaNum--; currentQ = 604; }
-            if(totalQ === 0) khatmaNum = 1;
-
-            let pct = Math.min((currentQ / KHATMA_LEN) * 100, 100);
-            let offset = 440 - (440 * pct) / 100; // 440 approx circum of 70r
-
-            document.getElementById('khatmaCircle').style.strokeDashoffset = offset;
-            document.getElementById('khatmaPct').innerText = Math.round(pct) + '%';
-            document.getElementById('khatmaLabel').innerText = 'الختمة ' + khatmaNum;
-            document.getElementById('totalPagesDisplay').innerText = totalQ;
+            document.getElementById('planDoneCount').innerText = totalPlanDone;
             document.getElementById('taraweehCount').innerText = totalTaraweeh;
             document.getElementById('tahajjudCount').innerText = totalTahajjud;
 
-            // History
             const log = document.getElementById('historyLog');
             let hHtml = '';
             Object.keys(appData).sort().reverse().forEach(date => {
                 const pods = appData[date].podcasts || [];
                 if(pods.length) {
                     const dStr = new Date(date).toLocaleDateString('ar-EG', {day:'numeric', month:'numeric'});
-                    pods.forEach(p => hHtml += `
-                        <div class="flex justify-between items-center p-2 bg-white/5 rounded-lg border border-white/5">
-                            <span class="text-xs text-purple-100 font-medium truncate max-w-[70%]">${p}</span>
-                            <span class="text-[10px] text-theme-accent bg-theme-accent/10 px-1.5 py-0.5 rounded">${dStr}</span>
-                        </div>
-                    `);
+                    pods.forEach(p => hHtml += `<div class="flex justify-between items-center p-2 bg-white/5 rounded-lg border border-white/5"><span class="text-xs text-purple-100 font-medium truncate max-w-[70%]">${p}</span><span class="text-[10px] text-theme-accent bg-theme-accent/10 px-1.5 py-0.5 rounded">${dStr}</span></div>`);
                 }
             });
             log.innerHTML = hHtml || '<div class="text-center text-purple-400/50 text-xs py-2">لا توجد سجلات</div>';
