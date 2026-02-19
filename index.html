@@ -18,7 +18,7 @@
             theme: {
                 extend: {
                     screens: {
-                        'xs': '375px', // Small phones
+                        'xs': '375px', 
                     },
                     colors: {
                         theme: {
@@ -89,9 +89,19 @@
         }
         
         input { font-size: 16px !important; }
+
+        /* Loader */
+        .loader { border-top-color: #f0abfc; -webkit-animation: spinner 1.5s linear infinite; animation: spinner 1.5s linear infinite; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="text-white min-h-screen pb-40 overflow-x-hidden selection:bg-theme-accent selection:text-theme-bg">
+
+    <!-- LOADING SCREEN -->
+    <div id="loadingScreen" class="fixed inset-0 z-[200] bg-[#241245] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="loader ease-linear rounded-full border-4 border-t-4 border-white/20 h-12 w-12 mb-4"></div>
+        <p class="text-purple-300 text-sm animate-pulse font-kufi">جاري تجهيز بياناتك يا نورهان...</p>
+    </div>
 
     <!-- Background -->
     <div class="fixed inset-0 pointer-events-none z-0">
@@ -147,14 +157,14 @@
     </header>
 
     <!-- Main Content -->
-    <main class="relative z-20 container mx-auto px-3 w-full pb-6">
+    <main id="appContent" class="relative z-20 container mx-auto px-3 w-full pb-6 opacity-0 transition-opacity duration-1000">
         <div class="flex flex-col gap-4">
             
             <!-- SECTION 0: TODAY'S PLAN (New) -->
             <div class="glass-card rounded-2xl p-4 border-t-4 border-theme-gold">
                 <div class="flex justify-between items-center mb-3 border-b border-white/5 pb-2">
                     <h2 class="text-lg font-bold text-theme-gold font-kufi flex items-center gap-2">
-                        <i class="fas fa-clipboard-list"></i> خُطَّةُ اليَوْم <span id="ramadanDayBadge" class="text-xs bg-white/10 px-2 py-0.5 rounded-full text-white"></span>
+                        <i class="fas fa-clipboard-list"></i> خُطَّةُ اليَوْم <span id="ramadanDayBadge" class="text-xs bg-white/10 px-2 py-0.5 rounded-full text-white"></span>
                     </h2>
                 </div>
                 
@@ -184,7 +194,7 @@
             <!-- SECTION 1: Prayers -->
             <div class="glass-card rounded-2xl p-4">
                 <h2 class="flex items-center gap-2 text-lg font-bold text-theme-primary mb-3 font-kufi border-b border-white/5 pb-2">
-                    <i class="fas fa-mosque"></i> الصَّلَوَاتُ الخَمْس
+                    <i class="fas fa-mosque"></i> الصَّلَوَاتُ الخَمْس
                 </h2>
                 <div id="prayersList" class="space-y-2.5"></div>
             </div>
@@ -192,7 +202,7 @@
             <!-- SECTION 2: Habits -->
             <div class="glass-card rounded-2xl p-4">
                 <h2 class="flex items-center gap-2 text-lg font-bold text-theme-accent mb-3 font-kufi border-b border-white/5 pb-2">
-                    <i class="fas fa-star"></i> عِبَادَاتٌ إِضَافِيَّة
+                    <i class="fas fa-star"></i> عِبَادَاتٌ إِضَافِيَّة
                 </h2>
 
                 <div class="space-y-2.5">
@@ -202,7 +212,7 @@
                             <div class="icon-box w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-purple-200 transition-colors">
                                 <i class="fas fa-moon text-sm"></i>
                             </div>
-                            <span class="habit-text font-medium text-sm font-kufi">صَلَاةُ التَّرَاوِيح</span>
+                            <span class="habit-text font-medium text-sm font-kufi">صَلَاةُ التَّرَاوِيح</span>
                         </div>
                         <div class="check-circle w-5 h-5 rounded-full border-2 border-white/20 flex items-center justify-center transition-colors">
                             <i class="fas fa-check text-[10px]"></i>
@@ -215,7 +225,7 @@
                             <div class="icon-box w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-purple-200 transition-colors">
                                 <i class="fas fa-cloud-moon text-sm"></i>
                             </div>
-                            <span class="habit-text font-medium text-sm font-kufi">صَلَاةُ التَّهَجُّد</span>
+                            <span class="habit-text font-medium text-sm font-kufi">صَلَاةُ التَّهَجُّد</span>
                         </div>
                         <div class="check-circle w-5 h-5 rounded-full border-2 border-white/20 flex items-center justify-center transition-colors">
                             <i class="fas fa-check text-[10px]"></i>
@@ -228,7 +238,7 @@
                             <div class="icon-box w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-purple-200 transition-colors">
                                 <i class="fas fa-hands-praying text-sm"></i>
                             </div>
-                            <span class="habit-text font-medium text-sm font-kufi">أَذْكَارُ الصَّبَاحِ وَالمَسَاء</span>
+                            <span class="habit-text font-medium text-sm font-kufi">أَذْكَارُ الصَّبَاحِ وَالمَسَاء</span>
                         </div>
                         <div class="check-circle w-5 h-5 rounded-full border-2 border-white/20 flex items-center justify-center transition-colors">
                             <i class="fas fa-check text-[10px]"></i>
@@ -239,11 +249,11 @@
 
             <!-- SECTION 3: Progress & Stats -->
             <div class="glass-card rounded-2xl p-5">
-                <h2 class="text-lg font-bold text-white mb-4 font-kufi text-center">إِنْجَازُكِ الشَّهْرِي</h2>
+                <h2 class="text-lg font-bold text-white mb-4 font-kufi text-center">إِنْجَازُكِ الشَّهْرِي</h2>
                 <div class="grid grid-cols-3 gap-2 text-center">
                     <div class="bg-white/5 rounded-xl p-2 border border-white/5">
                         <div id="planDoneCount" class="text-lg font-bold text-white font-kufi">0</div>
-                        <div class="text-[9px] text-purple-300 font-bold">خُطَّة مُكْتَمِلَة</div>
+                        <div class="text-[9px] text-purple-300 font-bold">خُطَّة مُكْتَمِلَة</div>
                     </div>
                     <div class="bg-white/5 rounded-xl p-2 border border-white/5">
                         <div id="taraweehCount" class="text-lg font-bold text-theme-primary font-kufi">0</div>
@@ -251,7 +261,7 @@
                     </div>
                     <div class="bg-white/5 rounded-xl p-2 border border-white/5">
                         <div id="tahajjudCount" class="text-lg font-bold text-theme-accent font-kufi">0</div>
-                        <div class="text-[9px] text-purple-300 font-bold">تَهَجُّد</div>
+                        <div class="text-[9px] text-purple-300 font-bold">تَهَجُّد</div>
                     </div>
                 </div>
             </div>
@@ -285,9 +295,35 @@
         </button>
     </div>
 
-    <!-- Scripts -->
-    <script>
-        // --- 1. RAMADAN SCHEDULE DATA (Extracted from Image) ---
+    <!-- Scripts (Firebase + Logic) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // 🔥 Firebase Config 🔥
+        const firebaseConfig = {
+            apiKey: "AIzaSyBtHvklnxlP7ZgTvwJrpgMz4cbWiuhq9TM",
+            authDomain: "create-project-36d4c.firebaseapp.com",
+            projectId: "create-project-36d4c",
+            storageBucket: "create-project-36d4c.firebasestorage.app",
+            messagingSenderId: "384696044918",
+            appId: "1:384696044918:web:aad5ebaaa523b79eb1fe57",
+            measurementId: "G-KCT400M4F3"
+        };
+
+        // Initialize Firebase
+        let app, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            console.log("Firebase Connected");
+        } catch(e) {
+            console.error("Firebase connection error", e);
+        }
+
+        const USER_ID = "Nourhan_Profile"; // Static ID for this specific app
+
+        // --- 1. RAMADAN SCHEDULE DATA ---
         const SCHEDULE = [
             { day: 1, rev: "الربع 1، 2", read: "الجزء 1، 2" },
             { day: 2, rev: "الربع 1، 2", read: "الجزء 3" },
@@ -324,37 +360,60 @@
         // --- Config ---
         const PRAYERS_CONFIG = {
             fajr: { label: 'الفَجْر', fard: true, sunnah: true },
-            duha: { label: 'الضُّحَى', fard: false, sunnah: true },
-            dhuhr: { label: 'الظُّهْر', fard: true, sunnah: true },
+            duha: { label: 'الضُّحَى', fard: false, sunnah: true },
+            dhuhr: { label: 'الظُّهْر', fard: true, sunnah: true },
             asr: { label: 'العَصْر', fard: true, sunnah: true },
             maghrib: { label: 'المَغْرِب', fard: true, sunnah: true },
             isha: { label: 'العِشَاء', fard: true, sunnah: true }
         };
 
-        // Assume today is Day 1 of usage -> Mapped to Ramadan 1 for simplicity in this demo
-        // Ideally we pick a start date. Let's start tracking from Feb 18, 2026 (today) as Ramadan 1.
         const RAMADAN_START_DATE = new Date('2026-02-18'); 
 
         let currentDate = new Date().toISOString().split('T')[0];
-        let appData = JSON.parse(localStorage.getItem('ramadanTrackerData')) || {};
+        let appData = {};
 
-        document.addEventListener('DOMContentLoaded', () => {
+        // Load data on start
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                if (db) {
+                    const docRef = doc(db, "users", USER_ID);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        appData = docSnap.data().data || {};
+                    } else {
+                        // try to migrate from local storage if exists
+                        appData = JSON.parse(localStorage.getItem('ramadanTrackerData')) || {};
+                    }
+                } else {
+                    appData = JSON.parse(localStorage.getItem('ramadanTrackerData')) || {};
+                }
+            } catch(e) {
+                appData = JSON.parse(localStorage.getItem('ramadanTrackerData')) || {};
+            }
+
+            // Hide Loader & Show App
+            document.getElementById('loadingScreen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('appContent').classList.remove('opacity-0');
+            }, 500);
+
             initPrayersUI();
             updateUI();
         });
 
-        function changeDate(d) {
+        // Binding functions to window for onclick handlers
+        window.changeDate = function(d) {
             const dt = new Date(currentDate); dt.setDate(dt.getDate() + d);
             currentDate = dt.toISOString().split('T')[0];
             updateUI(); 
-        }
+        };
 
         function getRamadanDayIndex(dateStr) {
             const curr = new Date(dateStr);
             const start = new Date(RAMADAN_START_DATE);
             const diffTime = Math.abs(curr - start);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-            // If date is before start, show day 1. If after 30, show 30.
             if(curr < start) return 1;
             return (diffDays + 1) > 30 ? (diffDays + 1) % 30 || 30 : (diffDays + 1);
         }
@@ -369,7 +428,6 @@
                 plan: { review: false, reading: false } 
             };
 
-            // 1. Update Schedule Section
             const rDay = getRamadanDayIndex(currentDate);
             const scheduleItem = SCHEDULE.find(s => s.day === rDay) || SCHEDULE[0];
             
@@ -380,7 +438,6 @@
             updatePlanVisual('review', day.plan?.review);
             updatePlanVisual('reading', day.plan?.reading);
 
-            // 2. Update Prayers
             Object.keys(PRAYERS_CONFIG).forEach(k => {
                 const p = PRAYERS_CONFIG[k];
                 const s = day.prayers?.[k] || {};
@@ -388,7 +445,6 @@
                 if(p.sunnah) setBtnState(`${k}-sunnah`, s.sunnah, true);
             });
 
-            // 3. Update Habits
             updateHabitVisual('taraweeh', day.taraweeh);
             updateHabitVisual('tahajjud', day.tahajjud);
             updateHabitVisual('azkar', day.azkar);
@@ -396,11 +452,10 @@
             updateDashboard();
         }
 
-        function togglePlan(type) {
+        window.togglePlan = function(type) {
             const card = document.getElementById(`${type}PlanCard`);
-            const isDone = card.classList.toggle('plan-done');
-            // Save happens in saveData
-        }
+            card.classList.toggle('plan-done');
+        };
 
         function updatePlanVisual(type, isDone) {
             const card = document.getElementById(`${type}PlanCard`);
@@ -415,17 +470,17 @@
                 const p = PRAYERS_CONFIG[key];
                 let btns = '<div class="flex gap-2">';
                 if(p.fard) btns += `<button id="${key}-fard" onclick="toggleBtn(this)" class="h-8 px-3 rounded-lg border border-white/10 text-[11px] text-purple-200 transition-all font-medium active:scale-95">فَرْض</button>`;
-                else if(key === 'duha') btns += `<span class="text-[10px] text-purple-400 self-center ml-2">سُنَّة</span>`;
-                if(p.sunnah) btns += `<button id="${key}-sunnah" onclick="toggleBtn(this, true)" class="h-8 px-3 rounded-lg border border-white/10 text-[11px] text-purple-200 transition-all font-medium active:scale-95">سُنَّة</button>`;
+                else if(key === 'duha') btns += `<span class="text-[10px] text-purple-400 self-center ml-2">سُنَّة</span>`;
+                if(p.sunnah) btns += `<button id="${key}-sunnah" onclick="toggleBtn(this, true)" class="h-8 px-3 rounded-lg border border-white/10 text-[11px] text-purple-200 transition-all font-medium active:scale-95">سُنَّة</button>`;
                 btns += '</div>';
                 container.innerHTML += `<div class="flex justify-between items-center py-2.5 border-b border-white/5 last:border-0"><span class="font-bold text-sm text-white font-kufi ${key==='duha'?'text-theme-accent':''}">${p.label}</span>${btns}</div>`;
             });
         }
 
-        function toggleBtn(btn, isSunnah = false) {
+        window.toggleBtn = function(btn, isSunnah = false) {
             btn.classList.toggle('active');
             applyBtnStyles(btn, btn.classList.contains('active'), isSunnah);
-        }
+        };
 
         function setBtnState(id, active, isSunnah = false) {
             const btn = document.getElementById(id);
@@ -444,16 +499,16 @@
             }
         }
 
-        function toggleHabit(id) {
+        window.toggleHabit = function(id) {
             document.getElementById(id + 'Card').classList.toggle('habit-active');
-        }
+        };
 
         function updateHabitVisual(id, completed) {
             const card = document.getElementById(id + 'Card');
             if(completed) card.classList.add('habit-active'); else card.classList.remove('habit-active');
         }
 
-        function saveData() {
+        window.saveData = async function() {
             const prayers = {};
             let fardDone = 0;
             Object.keys(PRAYERS_CONFIG).forEach(k => {
@@ -466,7 +521,6 @@
 
             const currentPodcasts = appData[currentDate]?.podcasts || [];
             
-            // Capture plan state
             const plan = {
                 review: document.getElementById('reviewPlanCard').classList.contains('plan-done'),
                 reading: document.getElementById('readingPlanCard').classList.contains('plan-done')
@@ -481,17 +535,33 @@
                 podcasts: currentPodcasts
             };
 
-            localStorage.setItem('ramadanTrackerData', JSON.stringify(appData));
-            updateDashboard();
-
+            // DB Save
             const btn = document.getElementById('saveBtn');
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check-double"></i> تَمَّ الحِفْظُ';
-            btn.classList.replace('from-theme-accent', 'from-green-500');
-            btn.classList.replace('to-purple-500', 'to-green-600');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ';
             
-            if(fardDone === 5) {
-                confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 }, colors: ['#e879f9', '#ffffff', '#fcd34d'] });
+            try {
+                if (db) {
+                    await setDoc(doc(db, "users", USER_ID), {
+                        data: appData,
+                        lastUpdated: new Date().toISOString()
+                    }, { merge: true });
+                }
+                localStorage.setItem('ramadanTrackerData', JSON.stringify(appData));
+                
+                updateDashboard();
+
+                btn.innerHTML = '<i class="fas fa-check-double"></i> تَمَّ الحِفْظُ';
+                btn.classList.replace('from-theme-accent', 'from-green-500');
+                btn.classList.replace('to-purple-500', 'to-green-600');
+                
+                if(fardDone === 5) {
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 }, colors: ['#e879f9', '#ffffff', '#fcd34d'] });
+                }
+            } catch (e) {
+                console.error("Save error", e);
+                localStorage.setItem('ramadanTrackerData', JSON.stringify(appData));
+                btn.innerHTML = '<i class="fas fa-check"></i> حفظ محلي';
             }
 
             setTimeout(() => {
@@ -499,9 +569,9 @@
                 btn.classList.replace('from-green-500', 'from-theme-accent');
                 btn.classList.replace('to-green-600', 'to-purple-500');
             }, 1500);
-        }
+        };
 
-        function addPodcast() {
+        window.addPodcast = function() {
             const inp = document.getElementById('podcastInput');
             const val = inp.value.trim();
             if(!val) return;
@@ -509,8 +579,8 @@
             if(!appData[currentDate].podcasts) appData[currentDate].podcasts = [];
             appData[currentDate].podcasts.push(val);
             inp.value = '';
-            saveData();
-        }
+            window.saveData();
+        };
 
         function updateDashboard() {
             let totalTaraweeh = 0, totalTahajjud = 0, totalPlanDone = 0;
@@ -536,9 +606,13 @@
             log.innerHTML = hHtml || '<div class="text-center text-purple-400/50 text-xs py-2">لا توجد سجلات</div>';
         }
 
-        function resetData() {
-            if(confirm('هل أنت متأكد؟')) { localStorage.removeItem('ramadanTrackerData'); location.reload(); }
-        }
+        window.resetData = function() {
+            if(confirm('هل أنت متأكد؟ سيتم حذف البيانات.')) { 
+                localStorage.removeItem('ramadanTrackerData');
+                if(db) setDoc(doc(db, "users", USER_ID), { data: {} }, { merge: true });
+                location.reload(); 
+            }
+        };
     </script>
 </body>
 </html>
